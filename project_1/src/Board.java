@@ -2,44 +2,70 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Board {
-    int[][] matrix;
+    /**
+     * Creates an object of empty board, which later is filled by Generator object
+     *
+     * @param matrix board table consisting all cells
+     * @param rowsSum constains sum for each row
+     * @param columsSum constains sum for each column
+     * @param size board is sized as size x size
+     * @param rowMaxSum specifies the maximum sum for a single row
+     */
+
+    Cell[] matrix;
     int[] rowsSum;
     int[] columnsSum;
     int size;
     int rowMaxSum;
 
+    public void setRowsSum(int[] rowsSum) {
+        this.rowsSum = rowsSum;
+    }
+
+    public void setColumnsSum(int[] columnsSum) {
+        this.columnsSum = columnsSum;
+    }
+
     public Board(int size) {
         this.size = size;
         this.rowsSum = new int[size];
         this.columnsSum = new int[size];
-        this.matrix = new int[size][size];
+        this.matrix = new Cell[size*size];
 
         for (int i = 1; i <= size; ++i) {
             this.rowMaxSum += i;
         }
-    }
-    public void setRowAtMatrix(int a, int line) {
-        for (int i = size; i > 0; --i) {
-            if (a / i > 0) {
 
-                System.out.println(a + " " + i );
-                this.matrix[line][i-1] = 1;
-                int prev = this.columnsSum[i-1];
-                this.columnsSum[i-1] = prev + line + 1;
-                a -= i;
+        fillMatrix();
+    }
+
+
+
+    public void fillMatrix(){
+
+        int currentPosition = 0;
+
+        for(int i=1; i <= size; i++){
+
+            for(int j=1; j <= size; j++){
+
+                this.matrix[currentPosition] = new Cell(j, i);
+                currentPosition += 1;
+
             }
+
         }
+
     }
 
-    public void generateLevel() {
-        Random rand = new Random();
-        for (int i = 0; i < this.size; ++i) {
-            int randNum = rand.nextInt(rowMaxSum+1);
-            rowsSum[i] = randNum;
-
-            setRowAtMatrix(randNum, i);
-        }
-    }
+//    public void generateRowSums() {
+//        Random rand = new Random();
+//        for (int i = 0; i < this.size; ++i) {
+//            int randNum = rand.nextInt(rowMaxSum+1);
+//            rowsSum[i] = randNum;
+//        }
+//    }
+//
 
     public void printGameInfo() {
         System.out.println(Arrays.deepToString(matrix));
@@ -49,28 +75,54 @@ public class Board {
 
     @Override
     public String toString() {
-        StringBuilder resultString = new StringBuilder("*|");
+        StringBuilder resultString = new StringBuilder();
 
-        for (int i = 0; i < this.size; ++i) {
-            resultString.append(i+1).append(" ");
+        StringBuilder columnIndexes = new StringBuilder("    ");
+        StringBuilder indexSeparator = new StringBuilder("  |‾");
+
+        for(int i = 1; i <= size; i++){
+            columnIndexes.append(" " + i + " ");
+            indexSeparator.append(" ‾ ");
         }
 
-        resultString.append("\n");
+        indexSeparator.append("‾|");
+        resultString.append(columnIndexes + System.getProperty("line.separator") + indexSeparator);
 
-        for (int i = 0; i < this.size; ++i) {
-            resultString.append(i+1).append("|");
+        StringBuilder cells = new StringBuilder();
+        int currentRow = 0;
 
-            for (int j = 0; j < this.size; ++j) {
-                if (j < size - 1) {
-                    resultString.append(matrix[i][j]).append(" ");
-                } else {
-                    resultString.append(matrix[i][j]);
+        for(Cell cell : matrix){
+
+            if(cell.getCoordinateY() != currentRow){
+
+                if(currentRow != 0){
+                    cells.append(" | " + this.rowsSum[currentRow-1]);
                 }
+                currentRow = cell.getCoordinateY();
+                cells.append(System.getProperty("line.separator") + currentRow + " | ");
             }
-            if (i < size - 1) {
-                resultString.append("\n");
-            }
+
+            cells.append(cell);
         }
+
+        resultString.append(cells.append(" | " + rowsSum[size-1]+System.getProperty("line.separator")));
+
+
+        StringBuilder columnSums = new StringBuilder("    ");
+        StringBuilder sumSeparator = new StringBuilder("  |_");
+
+        for(int i = 1; i <= size; i++){
+            columnSums.append(" " + this.columnsSum[i-1] + " ");
+            sumSeparator.append(" _ ");
+        }
+
+        sumSeparator.append("_|");
+        resultString.append(sumSeparator + System.getProperty("line.separator") + columnSums);
+
+
         return resultString.toString();
+
+
     }
+
 }
