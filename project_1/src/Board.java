@@ -81,7 +81,7 @@ public class Board {
         StringBuilder indexSeparator = new StringBuilder("  |‾");
 
         for(int i = 1; i <= size; i++){
-            columnIndexes.append(" " + i + " ");
+            columnIndexes.append(" ").append(i).append(" ");
             indexSeparator.append(" ‾ ");
         }
 
@@ -117,7 +117,7 @@ public class Board {
         }
 
         sumSeparator.append("_|");
-        resultString.append(sumSeparator + System.getProperty("line.separator") + columnSums);
+        resultString.append(sumSeparator).append(System.getProperty("line.separator")).append(columnSums);
 
 
         return resultString.toString();
