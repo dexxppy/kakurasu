@@ -58,14 +58,11 @@ public class Board {
 
     }
 
-//    public void generateRowSums() {
-//        Random rand = new Random();
-//        for (int i = 0; i < this.size; ++i) {
-//            int randNum = rand.nextInt(rowMaxSum+1);
-//            rowsSum[i] = randNum;
-//        }
-//    }
-//
+    public void markPoint(int x, int y) {
+        int index = (y-1) * size + (x-1);
+        Cell cell = matrix[index];
+        cell.setFilled(!cell.isFilled());
+    }
 
     public void printGameInfo() {
         System.out.println(Arrays.deepToString(matrix));
@@ -112,7 +109,13 @@ public class Board {
         StringBuilder sumSeparator = new StringBuilder("  |_");
 
         for(int i = 1; i <= size; i++){
-            columnSums.append(" " + this.columnsSum[i-1] + " ");
+            if (this.columnsSum[i-1] > 9) {
+                columnSums.append(" " + this.columnsSum[i-1]);
+            } else {
+                columnSums.append(" " + this.columnsSum[i-1] + " ");
+
+            }
+
             sumSeparator.append(" _ ");
         }
 

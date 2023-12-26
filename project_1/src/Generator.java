@@ -18,30 +18,25 @@ public class Generator extends Board {
 
         for (int i = 0; i < size; ++i) {
 
-            rowsSum[i] = rand.nextInt(rowMaxSum);
+            rowsSum[i] = rand.nextInt(rowMaxSum + 1);
 
         }
-
-        setRowsSum(rowsSum);
     }
 
     public void gen_cols() {
-        int[] colsSums = new int[size];
-
         Combinations comb = new Combinations();
 
-        for (int i = 0; i < size; ++i) {
-            int row_number = rowsSum[i];
+        for (int i = 1; i <= size; ++i) {
+            int row_number = rowsSum[i-1];
 
             int[] rand_comb = comb.get_random_combination(row_number, size);
-            System.out.println(Arrays.toString(rand_comb));
-            for (int j = 7; j > 0; --j) {
+
+            for (int j = 0; j < rand_comb.length; ++j) {
+
+                int col_number = rand_comb[j] - 1 ;
+                columnsSum[col_number] += i;
 
             }
         }
-
-        setColumnsSum(colsSums);
     }
-
-
 }
