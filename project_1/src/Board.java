@@ -39,7 +39,42 @@ public class Board {
         fillMatrix();
     }
 
+    public Board() {
+        this.size = generateSize();
+        this.rowsSum = new int[size];
+        this.columnsSum = new int[size];
+        this.matrix = new Cell[size*size];
 
+        for (int i = 1; i <= size; ++i) {
+            this.rowMaxSum += i;
+        }
+
+        fillMatrix();
+    }
+
+    public int getSize(){
+        return this.size;
+    }
+
+    public int getRowSum(int i){
+        return this.rowsSum[i];
+    }
+
+    public int getColumnSum(int i){
+        return this.columnsSum[i];
+    }
+
+    public static int generateSize(){
+        Random random = new Random();
+        int level = PlayerOptions.chooseLevel();
+
+        return switch (level) {
+            case 1 -> (random.nextInt(3, 5));
+            case 2 -> (random.nextInt(5, 7));
+            case 3 -> (random.nextInt(7, 9));
+            default -> 0;
+        };
+    }
 
     public void fillMatrix(){
 
@@ -62,6 +97,44 @@ public class Board {
         int index = (y-1) * size + (x-1);
         Cell cell = matrix[index];
         cell.setFilled(!cell.isFilled());
+    }
+
+    public int countRow(int y){
+        int counter = 0;
+
+        for(Cell cell : matrix){
+            if(cell.isFilled() && cell.getCoordinateY() == y){
+                counter += cell.getCoordinateX();
+            }
+        }
+
+        return counter;
+    }
+
+    public int countColumn(int x){
+        int counter = 0;
+
+        for(Cell cell : matrix){
+            if(cell.isFilled() && cell.getCoordinateX() == x){
+                counter += cell.getCoordinateY();
+            }
+        }
+
+        return counter;
+    }
+
+    public boolean isCompleted(){
+
+        for(int i = 0; i < getSize(); i++){
+            int rowSum = countRow(i+1);
+            int columnSum = countColumn(i+1);
+
+            if(rowSum != getRowSum(i) || columnSum != getColumnSum(i)){
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public void printGameInfo() {
