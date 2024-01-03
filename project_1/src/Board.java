@@ -26,6 +26,19 @@ public class Board {
         this.columnsSum = columnsSum;
     }
 
+    public Board(int[] rowsSum, int[] columnSum) {
+        this.size = rowsSum.length;
+        this.rowsSum = rowsSum;
+        this.columnsSum = columnSum;
+        this.matrix = new Cell[size*size];
+
+        for (int i = 1; i <= size; ++i) {
+            this.rowMaxSum += i;
+        }
+
+        fillMatrix();
+    }
+
     public Board(int size) {
         this.size = size;
         this.rowsSum = new int[size];
@@ -62,6 +75,12 @@ public class Board {
 
     public int getColumnSum(int i){
         return this.columnsSum[i];
+    }
+
+    public Cell[] getMatrix(){ return this.matrix;}
+    public Cell getCell(int coordX, int coordY){
+        int index = (coordY-1)*size+coordX-1;
+        return matrix[index];
     }
 
     public static int generateSize(){
