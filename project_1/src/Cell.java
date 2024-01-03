@@ -49,4 +49,9 @@ public class Cell {
     public void toggleFill(){
         setFilled(!isFilled());
     }
+
+    public void fill(){
+        setFilled(true);
+    }
+
 }
