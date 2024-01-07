@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
 //        Generator board = new Generator(6);
@@ -8,7 +12,15 @@ public class Main {
 //        board.markPoint(4,4);
 //        System.out.println(board);
 
-        Game game = new Game();
-        game.run();
+//        Game game = new Game();
+//        game.run();
+
+        int[] counts = {1, 2, 1, 3};
+
+        CombinationsGenerator generator = new CombinationsGenerator();
+
+        ArrayList<int[]> combinations1 = generator.generateCombinations(counts);
+
+        System.out.println("input: " + Arrays.toString(counts) + " output: " + Arrays.deepToString(combinations1.toArray()));
     }
 }

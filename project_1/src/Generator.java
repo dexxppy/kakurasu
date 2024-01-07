@@ -55,4 +55,7 @@ public class Generator{
     public Board getBoard(){
         return this.board;
     }
+
+    public void markPoint(int i, int i1) {
+    }
 }
