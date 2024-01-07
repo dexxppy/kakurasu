@@ -58,7 +58,27 @@ public class Solver {
         }
     }
 
+    // --------- solve ------------
+
     public void tickNecessaryCells() {
+
+        for(int i = 0; i < board.getSize(); i++){
+            if(rowSolved(i+1)){
+                rowCompleted(i+1);
+            }
+
+            if(columnSolved(i+1)){
+                columnCompleted(i+1);
+            }
+
+            if(optionsForEachRow.get(i).isEmpty()){
+                addEmptyFiller(i, true);
+            }
+
+            if(optionsForEachColumn.get(i).isEmpty()){
+                addEmptyFiller(i, false);
+            }
+        }
 
         for (int i = 0; i < board.getSize(); i++) {
             List<List<Integer>> rowSumOptions = optionsForEachRow.get(i);
@@ -67,15 +87,15 @@ public class Solver {
                 for (int element : rowSumOptions.get(0)) {
                     board.getCell(element, i + 1).fill();
                     removeUnreachableOptionsForColumn(board.getCell(element, i + 1));
-                    System.out.println("1");
 
                     printBoard();
                     System.out.println(optionsForEachRow);
                     System.out.println();
                     System.out.println(optionsForEachColumn);
                 }
+
+                rowCompleted(i+1);
                 addEmptyFiller(i, true);
-                System.out.println("2");
                 printBoard();
                 System.out.println(optionsForEachRow);
                 System.out.println();
@@ -92,13 +112,13 @@ public class Solver {
                 for (int element : columnSumOptions.get(0)) {
                     board.getCell(i + 1, element).fill();
                     removeUnreachableOptionsForRow(board.getCell(i + 1, element));
-                    System.out.println("1");
                     printBoard();
                     System.out.println(optionsForEachRow);
                     System.out.println();
                     System.out.println(optionsForEachColumn);
                 }
-                System.out.println("2");
+
+                columnCompleted(i+1);
                 addEmptyFiller(i, false);
                 printBoard();
                 System.out.println(optionsForEachRow);
@@ -131,18 +151,6 @@ public class Solver {
             }
         }
 
-        for(int i = 1; i <= board.getSize(); i++){
-            if(columnSolved(i)){
-                if(!board.getCell(i, targetRow+1).isFilled()){
-                    for(List<Integer> rowOptions : optionsForEachRow.get(targetRow)){
-                        if(rowOptions.contains(i)){
-                            optionsToRemove.add(rowOptions);
-                        }
-                    }
-                }
-            }
-        }
-
         for(List<Integer> option : optionsToRemove){
             optionsForEachRow.get(targetRow).remove(option);
         }
@@ -167,18 +175,6 @@ public class Solver {
 
             if(!containsNecessaryElement){
                 optionsToRemove.add(option);
-            }
-        }
-
-        for(int i = 1; i <= board.getSize(); i++){
-            if(rowSolved(i)){
-                if(!board.getCell(targetColumn+1, i).isFilled()){
-                    for(List<Integer> columnOptions : optionsForEachColumn.get(targetColumn)){
-                        if(columnOptions.contains(i)){
-                            optionsToRemove.add(columnOptions);
-                        }
-                    }
-                }
             }
         }
 
@@ -262,6 +258,72 @@ public class Solver {
             if(board.columnsSum[i] == 0){
                 addEmptyFiller(i, false);
                 removeUnreachableOptionsForRows(i);
+            }
+        }
+    }
+
+    public void columnCompleted(int index){
+
+        for(int i = 1; i <= board.getSize(); i++){
+            List<List<Integer>> optionsToRemove = new ArrayList<>();
+
+            if(board.getCell(index, i).isFilled()){
+
+                for(List<Integer> option : optionsForEachRow.get(i-1)){
+                    if(!option.contains(index)){
+                        optionsToRemove.add(option);
+                    }
+                }
+
+            }else{
+
+                for(List<Integer> option : optionsForEachRow.get(i-1)){
+                    if(option.contains(index)){
+                        optionsToRemove.add(option);
+                    }
+                }
+
+            }
+
+            for(List<Integer> option : optionsToRemove){
+                optionsForEachRow.get(i-1).remove(option);
+            }
+
+            if(optionsForEachRow.get(i-1).isEmpty()){
+                addEmptyFiller(i-1, true);
+            }
+        }
+    }
+
+    public void rowCompleted(int index){
+
+        for(int i = 1; i <= board.getSize(); i++){
+            List<List<Integer>> optionsToRemove = new ArrayList<>();
+
+            if(board.getCell(i,index).isFilled()){
+
+                for(List<Integer> option : optionsForEachColumn.get(i-1)){
+                    if(!option.contains(index)){
+                        optionsToRemove.add(option);
+                    }
+                }
+
+            }else{
+
+                for(List<Integer> option : optionsForEachColumn.get(i-1)){
+                    if(option.contains(index)){
+                        optionsToRemove.add(option);
+                    }
+                }
+
+            }
+
+            for(List<Integer> option : optionsToRemove){
+                optionsForEachColumn.get(i-1).remove(option);
+            }
+
+            if(optionsForEachColumn.get(i-1).isEmpty()){
+                addEmptyFiller(i-1, false);
             }
         }
     }
@@ -493,6 +555,7 @@ public class Solver {
 
         if(solvingSuccessful()){
             System.out.println(this.board);
+            System.out.println("Plansza rozwiązana");
         }else{
             System.out.println("Nie udało się rozwiązać planszy");
         }
