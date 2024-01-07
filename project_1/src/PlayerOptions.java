@@ -147,6 +147,16 @@ public class PlayerOptions {
         System.out.println("Gratulacje! Plansza została wypełniona poprawnie.");
     }
 
+    public static void printSolvedBoard(Board board){
+        if(board.isCompleted()){
+            System.out.println("Przykładowo rozwiązana plansza: ");
+            System.out.println(board);
+        }else{
+            System.out.println("Nie udało się wygenerować przykładowego rozwiązania");
+        }
+
+    }
+
     public static void boardGenerationFailed(){
         System.out.println("Wystąpił błąd podczas generowania nowej planszy");
     }
