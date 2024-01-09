@@ -14,6 +14,12 @@ public class Generator{
         gen_cols();
     }
 
+    public Generator() {
+        this.board = new Board();
+        gen_rows();
+        gen_cols();
+    }
+
     public void gen_rows() {
         Random rand = new Random();
         int[] rowsSum = new int[board.getSize()];

@@ -61,17 +61,24 @@ public class Combinations {
     }
 
     private static void generateCombinationsHelper(int[] elements, int index, List<Integer> currentCombination, List<List<Integer>> result) {
-        if (index == elements.length) {
-            // Add a copy of the current combination to the result
-            result.add(new ArrayList<>(currentCombination));
-        } else {
-            // Include the element at the current index in the combination
-            currentCombination.add(elements[index]);
-            generateCombinationsHelper(elements, index + 1, currentCombination, result);
 
-            // Exclude the element at the current index in the combination
-            currentCombination.remove(currentCombination.size() - 1);
-            generateCombinationsHelper(elements, index + 1, currentCombination, result);
+        try {
+
+            if (index == elements.length) {
+                // Add a copy of the current combination to the result
+                result.add(new ArrayList<>(currentCombination));
+            } else {
+                // Include the element at the current index in the combination
+                currentCombination.add(elements[index]);
+                generateCombinationsHelper(elements, index + 1, currentCombination, result);
+
+                // Exclude the element at the current index in the combination
+                currentCombination.remove(currentCombination.size() - 1);
+                generateCombinationsHelper(elements, index + 1, currentCombination, result);
+            }
+
+        }catch(Exception ignored){
+
         }
     }
 

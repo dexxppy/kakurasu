@@ -17,7 +17,7 @@ public class Solver {
     }
 
     public Solver(Board board) {
-        this.board = board;
+        this.board = new Board(board.rowsSum, board.columnsSum);
         this.rowSums = board.rowsSum;
         this.optionsForEachRow = new ArrayList<>();
         setRowOptions();
@@ -26,40 +26,45 @@ public class Solver {
 
     public List<List<Integer>> generateOptions(int number){
 
-        if(number == 0){
-            List<List<Integer>> allOptions = new ArrayList<>();
-            List<Integer> onlyOption = new ArrayList<>();
-            onlyOption.add(0);
-            allOptions.add(onlyOption);
-            return allOptions;
-        }
+        try {
 
-        List<List<Integer>> allOptions = Combinations.generateCombinations(number);
+            if (number == 0) {
+                List<List<Integer>> allOptions = new ArrayList<>();
+                List<Integer> onlyOption = new ArrayList<>();
+                onlyOption.add(0);
+                allOptions.add(onlyOption);
+                return allOptions;
+            }
 
-        List<List<Integer>> optionsToRemove = new ArrayList<>();
+            List<List<Integer>> allOptions = Combinations.generateCombinations(number);
 
-        for(List<Integer> option : allOptions){
-            int sum = 0;
-            boolean optionImpossibleToReach = false;
+            List<List<Integer>> optionsToRemove = new ArrayList<>();
 
-            for(int part : option){
-                sum += part;
+            for (List<Integer> option : allOptions) {
+                int sum = 0;
+                boolean optionImpossibleToReach = false;
 
-                if(part > board.size){
-                    optionImpossibleToReach = true;
+                for (int part : option) {
+                    sum += part;
+
+                    if (part > board.size) {
+                        optionImpossibleToReach = true;
+                    }
+                }
+
+                if (sum != number || optionImpossibleToReach) {
+                    optionsToRemove.add(option);
                 }
             }
 
-            if(sum != number || optionImpossibleToReach){
-                optionsToRemove.add(option);
+            for (List<Integer> option : optionsToRemove) {
+                allOptions.remove(option);
             }
-        }
 
-        for(List<Integer> option : optionsToRemove){
-            allOptions.remove(option);
+            return allOptions;
+        }catch(Exception e){
+            return new ArrayList<>();
         }
-
-        return allOptions;
 
     }
 
@@ -124,19 +129,23 @@ public class Solver {
 
     private boolean solveKakurasu() {
 
-        ArrayList<int[]> combinations = getNumberOfCombinations();
+        try{
+            ArrayList<int[]> combinations = getNumberOfCombinations();
 
-        for(int[] combination : combinations){
-            Board testBoard = new Board(board.rowsSum, board.columnsSum);
-            List<List<Integer>> options = getOptions(combination);
-            fillBoardWithOptions(testBoard, options);
+            for(int[] combination : combinations){
+                Board testBoard = new Board(board.rowsSum, board.columnsSum);
+                List<List<Integer>> options = getOptions(combination);
+                fillBoardWithOptions(testBoard, options);
 
-            if(testBoard.isCompleted()){
-                this.board = testBoard;
-                return true;
+                if(testBoard.isCompleted()){
+                    this.board = testBoard;
+                    return true;
+                }
+
+
             }
-
-
+        }catch(Exception e){
+            return false;
         }
 
         return false;

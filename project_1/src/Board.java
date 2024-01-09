@@ -95,6 +95,17 @@ public class Board {
         };
     }
 
+    public static int generateSize(int level){
+        Random random = new Random();
+
+        return switch (level) {
+            case 1 -> (random.nextInt(3, 5));
+            case 2 -> (random.nextInt(5, 7));
+            case 3 -> (random.nextInt(7, 9));
+            default -> 0;
+        };
+    }
+
     public void fillMatrix(){
 
         int currentPosition = 0;
