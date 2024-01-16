@@ -89,7 +89,10 @@ public class Game {
     }
 
     public void run(){
+        Printer printer = new Printer();
+        printer.printStartText();
         play();
+
 
         while(playAgain()){
             play();
