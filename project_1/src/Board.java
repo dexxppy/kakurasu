@@ -30,7 +30,7 @@ public class Board {
         this.size = rowsSum.length;
         this.rowsSum = rowsSum;
         this.columnsSum = columnSum;
-        this.matrix = new Cell[size*size];
+        this.matrix = new Cell[size * size];
 
         for (int i = 1; i <= size; ++i) {
             this.rowMaxSum += i;
@@ -43,7 +43,7 @@ public class Board {
         this.size = size;
         this.rowsSum = new int[size];
         this.columnsSum = new int[size];
-        this.matrix = new Cell[size*size];
+        this.matrix = new Cell[size * size];
 
         for (int i = 1; i <= size; ++i) {
             this.rowMaxSum += i;
@@ -56,7 +56,7 @@ public class Board {
         this.size = generateSize();
         this.rowsSum = new int[size];
         this.columnsSum = new int[size];
-        this.matrix = new Cell[size*size];
+        this.matrix = new Cell[size * size];
 
         for (int i = 1; i <= size; ++i) {
             this.rowMaxSum += i;
@@ -65,25 +65,28 @@ public class Board {
         fillMatrix();
     }
 
-    public int getSize(){
+    public int getSize() {
         return this.size;
     }
 
-    public int getRowSum(int i){
+    public int getRowSum(int i) {
         return this.rowsSum[i];
     }
 
-    public int getColumnSum(int i){
+    public int getColumnSum(int i) {
         return this.columnsSum[i];
     }
 
-    public Cell[] getMatrix(){ return this.matrix;}
-    public Cell getCell(int coordX, int coordY){
-        int index = (coordY-1)*size+coordX-1;
+    public Cell[] getMatrix() {
+        return this.matrix;
+    }
+
+    public Cell getCell(int coordX, int coordY) {
+        int index = (coordY - 1) * size + coordX - 1;
         return matrix[index];
     }
 
-    public static int generateSize(){
+    public static int generateSize() {
         Random random = new Random();
         int level = PlayerOptions.chooseLevel();
 
@@ -95,7 +98,7 @@ public class Board {
         };
     }
 
-    public static int generateSize(int level){
+    public static int generateSize(int level) {
         Random random = new Random();
 
         return switch (level) {
@@ -106,13 +109,13 @@ public class Board {
         };
     }
 
-    public void fillMatrix(){
+    public void fillMatrix() {
 
         int currentPosition = 0;
 
-        for(int i=1; i <= size; i++){
+        for (int i = 1; i <= size; i++) {
 
-            for(int j=1; j <= size; j++){
+            for (int j = 1; j <= size; j++) {
 
                 this.matrix[currentPosition] = new Cell(j, i);
                 currentPosition += 1;
@@ -124,16 +127,16 @@ public class Board {
     }
 
     public void markPoint(int x, int y) {
-        int index = (y-1) * size + (x-1);
+        int index = (y - 1) * size + (x - 1);
         Cell cell = matrix[index];
         cell.setFilled(!cell.isFilled());
     }
 
-    public int countRow(int y){
+    public int countRow(int y) {
         int counter = 0;
 
-        for(Cell cell : matrix){
-            if(cell.isFilled() && cell.getCoordinateY() == y){
+        for (Cell cell : matrix) {
+            if (cell.isFilled() && cell.getCoordinateY() == y) {
                 counter += cell.getCoordinateX();
             }
         }
@@ -141,11 +144,11 @@ public class Board {
         return counter;
     }
 
-    public int countColumn(int x){
+    public int countColumn(int x) {
         int counter = 0;
 
-        for(Cell cell : matrix){
-            if(cell.isFilled() && cell.getCoordinateX() == x){
+        for (Cell cell : matrix) {
+            if (cell.isFilled() && cell.getCoordinateX() == x) {
                 counter += cell.getCoordinateY();
             }
         }
@@ -153,13 +156,13 @@ public class Board {
         return counter;
     }
 
-    public boolean isCompleted(){
+    public boolean isCompleted() {
 
-        for(int i = 0; i < getSize(); i++){
-            int rowSum = countRow(i+1);
-            int columnSum = countColumn(i+1);
+        for (int i = 0; i < getSize(); i++) {
+            int rowSum = countRow(i + 1);
+            int columnSum = countColumn(i + 1);
 
-            if(rowSum != getRowSum(i) || columnSum != getColumnSum(i)){
+            if (rowSum != getRowSum(i) || columnSum != getColumnSum(i)) {
                 return false;
             }
         }
@@ -180,7 +183,7 @@ public class Board {
         StringBuilder columnIndexes = new StringBuilder("    ");
         StringBuilder indexSeparator = new StringBuilder("  |‾");
 
-        for(int i = 1; i <= size; i++){
+        for (int i = 1; i <= size; i++) {
             columnIndexes.append(" ").append(i).append(" ");
             indexSeparator.append(" ‾ ");
         }
@@ -191,12 +194,12 @@ public class Board {
         StringBuilder cells = new StringBuilder();
         int currentRow = 0;
 
-        for(Cell cell : matrix){
+        for (Cell cell : matrix) {
 
-            if(cell.getCoordinateY() != currentRow){
+            if (cell.getCoordinateY() != currentRow) {
 
-                if(currentRow != 0){
-                    cells.append(" | " + this.rowsSum[currentRow-1]);
+                if (currentRow != 0) {
+                    cells.append(" | " + this.rowsSum[currentRow - 1]);
                 }
                 currentRow = cell.getCoordinateY();
                 cells.append(System.getProperty("line.separator") + currentRow + " | ");
@@ -205,17 +208,17 @@ public class Board {
             cells.append(cell);
         }
 
-        resultString.append(cells.append(" | " + rowsSum[size-1]+System.getProperty("line.separator")));
+        resultString.append(cells.append(" | " + rowsSum[size - 1] + System.getProperty("line.separator")));
 
 
         StringBuilder columnSums = new StringBuilder("    ");
         StringBuilder sumSeparator = new StringBuilder("  |_");
 
-        for(int i = 1; i <= size; i++){
-            if (this.columnsSum[i-1] > 9) {
-                columnSums.append(" " + this.columnsSum[i-1]);
+        for (int i = 1; i <= size; i++) {
+            if (this.columnsSum[i - 1] > 9) {
+                columnSums.append(" " + this.columnsSum[i - 1]);
             } else {
-                columnSums.append(" " + this.columnsSum[i-1] + " ");
+                columnSums.append(" " + this.columnsSum[i - 1] + " ");
 
             }
 
