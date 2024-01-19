@@ -1,9 +1,12 @@
+package Backend;
+
+import Utils.PlayerOptions;
+
 import java.util.Arrays;
-import java.util.Random;
 
 public class Board {
     /**
-     * Creates an object of empty board, which later is filled by Generator object
+     * Creates an object of empty board, which later is filled by Backend.Generator object
      *
      * @param matrix board table consisting all cells
      * @param rowsSum constains sum for each row
@@ -17,20 +20,33 @@ public class Board {
     int[] columnsSum;
     int size;
     int rowMaxSum;
-
-    public void setRowsSum(int[] rowsSum) {
-        this.rowsSum = rowsSum;
-    }
-
-    public void setColumnsSum(int[] columnsSum) {
-        this.columnsSum = columnsSum;
-    }
+    String[] solution;
 
     public Board(int[] rowsSum, int[] columnSum) {
         this.size = rowsSum.length;
         this.rowsSum = rowsSum;
         this.columnsSum = columnSum;
         this.matrix = new Cell[size * size];
+
+        for (int i = 1; i <= size; ++i) {
+            this.rowMaxSum += i;
+        }
+
+        fillMatrix();
+    }
+
+    public Board(String[] rowsSum, String[] columnSum, String[] solution) {
+        this.size = rowsSum.length;
+        this.rowsSum = new int[rowsSum.length];
+        this.columnsSum = new int[columnSum.length];
+
+        for(int i=0; i < rowsSum.length; i++){
+            this.rowsSum[i] = Integer.parseInt(rowsSum[i]);
+            this.columnsSum[i] = Integer.parseInt(columnSum[i]);
+        }
+
+        this.matrix = new Cell[size * size];
+        this.solution = solution;
 
         for (int i = 1; i <= size; ++i) {
             this.rowMaxSum += i;
@@ -68,45 +84,26 @@ public class Board {
     public int getSize() {
         return this.size;
     }
-
     public int getRowSum(int i) {
         return this.rowsSum[i];
     }
-
     public int getColumnSum(int i) {
         return this.columnsSum[i];
     }
-
-    public Cell[] getMatrix() {
-        return this.matrix;
-    }
-
+    public String[] getSolution(){ return this.solution;}
     public Cell getCell(int coordX, int coordY) {
         int index = (coordY - 1) * size + coordX - 1;
         return matrix[index];
     }
 
     public static int generateSize() {
-        Random random = new Random();
         int level = PlayerOptions.chooseLevel();
 
-        return switch (level) {
-            case 1 -> (random.nextInt(3, 5));
-            case 2 -> (random.nextInt(5, 7));
-            case 3 -> (random.nextInt(7, 9));
-            default -> 0;
-        };
+        return level+3;
     }
 
     public static int generateSize(int level) {
-        Random random = new Random();
-
-        return switch (level) {
-            case 1 -> (random.nextInt(3, 5));
-            case 2 -> (random.nextInt(5, 7));
-            case 3 -> (random.nextInt(7, 9));
-            default -> 0;
-        };
+        return level+3;
     }
 
     public void fillMatrix() {
@@ -124,12 +121,6 @@ public class Board {
 
         }
 
-    }
-
-    public void markPoint(int x, int y) {
-        int index = (y - 1) * size + (x - 1);
-        Cell cell = matrix[index];
-        cell.setFilled(!cell.isFilled());
     }
 
     public int countRow(int y) {
@@ -170,12 +161,6 @@ public class Board {
         return true;
     }
 
-    public void printGameInfo() {
-        System.out.println(Arrays.deepToString(matrix));
-        System.out.println(Arrays.toString(rowsSum));
-        System.out.println(Arrays.toString(columnsSum));
-    }
-
     @Override
     public String toString() {
         StringBuilder resultString = new StringBuilder();
@@ -189,7 +174,10 @@ public class Board {
         }
 
         indexSeparator.append("‾|");
-        resultString.append(columnIndexes + System.getProperty("line.separator") + indexSeparator);
+        resultString
+                .append(columnIndexes)
+                .append(System.getProperty("line.separator"))
+                .append(indexSeparator);
 
         StringBuilder cells = new StringBuilder();
         int currentRow = 0;
@@ -199,26 +187,41 @@ public class Board {
             if (cell.getCoordinateY() != currentRow) {
 
                 if (currentRow != 0) {
-                    cells.append(" | " + this.rowsSum[currentRow - 1]);
+                    cells
+                            .append(" | ")
+                            .append(this.rowsSum[currentRow - 1]);
                 }
                 currentRow = cell.getCoordinateY();
-                cells.append(System.getProperty("line.separator") + currentRow + " | ");
+                cells
+                        .append(System.getProperty("line.separator"))
+                        .append(currentRow).append(" | ");
             }
 
             cells.append(cell);
         }
 
-        resultString.append(cells.append(" | " + rowsSum[size - 1] + System.getProperty("line.separator")));
+        resultString.append(
+                cells.append(" | ")
+                        .append(rowsSum[size - 1])
+                        .append(System.getProperty("line.separator"))
+        );
 
 
         StringBuilder columnSums = new StringBuilder("    ");
         StringBuilder sumSeparator = new StringBuilder("  |_");
 
         for (int i = 1; i <= size; i++) {
+
             if (this.columnsSum[i - 1] > 9) {
-                columnSums.append(" " + this.columnsSum[i - 1]);
-            } else {
-                columnSums.append(" " + this.columnsSum[i - 1] + " ");
+                columnSums
+                        .append(" ")
+                        .append(this.columnsSum[i - 1]);
+            }
+            else {
+                columnSums
+                        .append(" ")
+                        .append(this.columnsSum[i - 1])
+                        .append(" ");
 
             }
 
@@ -226,7 +229,10 @@ public class Board {
         }
 
         sumSeparator.append("_|");
-        resultString.append(sumSeparator).append(System.getProperty("line.separator")).append(columnSums);
+        resultString
+                .append(sumSeparator)
+                .append(System.getProperty("line.separator"))
+                .append(columnSums);
 
 
         return resultString.toString();

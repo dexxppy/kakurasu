@@ -1,5 +1,11 @@
+package Backend;
+
+import Utils.Combinations;
+import Utils.CombinationsGenerator;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Solver {
 
@@ -8,20 +14,29 @@ public class Solver {
 
     private List<List<List<Integer>>> optionsForEachRow;
 
-    public Solver(int[] rowSums, int[] colSums) {
-        this.board = new Board(rowSums, colSums);
-        this.rowSums = rowSums;
-        this.optionsForEachRow = new ArrayList<>();
-        setRowOptions();
-        solveKakurasu();
-    }
-
     public Solver(Board board) {
         this.board = new Board(board.rowsSum, board.columnsSum);
         this.rowSums = board.rowsSum;
         this.optionsForEachRow = new ArrayList<>();
         setRowOptions();
         solveKakurasu();
+    }
+
+    public Solver(Board board, String[] solution){
+
+        for(int i = 0; i < solution.length; i++){
+
+            if(Objects.equals(solution[i], "1")){
+                int coordY = i/(board.getSize())+ 1;
+                int coordX = i - (coordY-1)*(board.getSize())+1;
+
+                board.getCell(coordX, coordY).fill();
+            }
+
+        }
+
+        this.board = board;
+
     }
 
     public List<List<Integer>> generateOptions(int number){
@@ -105,7 +120,7 @@ public class Solver {
     }
 
 
-    public static Board fillBoardWithOptions(Board board, List<List<Integer>> options){
+    public static void fillBoardWithOptions(Board board, List<List<Integer>> options){
 
         int rowIndex = 1;
 
@@ -118,16 +133,15 @@ public class Solver {
             }
 
             if(!isValid(board)){
-                return board;
+                return;
             }
 
             rowIndex++;
         }
 
-        return board;
     }
 
-    private boolean solveKakurasu() {
+    private void solveKakurasu() {
 
         try{
             ArrayList<int[]> combinations = getNumberOfCombinations();
@@ -139,16 +153,13 @@ public class Solver {
 
                 if(testBoard.isCompleted()){
                     this.board = testBoard;
-                    return true;
+                    return;
                 }
 
 
             }
-        }catch(Exception e){
-            return false;
+        }catch(Exception ignored){
         }
-
-        return false;
 
     }
 

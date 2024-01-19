@@ -1,3 +1,6 @@
+package Tests;
+
+import Backend.Game;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,11 +11,12 @@ class GameTest {
     void gamePlay() {
     }
 
-    @Test
+    // TODO: play again rebased into play(check the function and write a new test)
+    /*@Test
     void playAgain() {
-        Game game = new Game();
-        assertTrue(game.playAgain(),"Plays again");
+        Backend.Game game = new Backend.Game();
     }
+    */
 
     @Test
     void surrender() {

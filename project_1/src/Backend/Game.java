@@ -1,45 +1,70 @@
+package Backend;
+
+import Utils.PlayerOptions;
+
 public class Game {
 
-    private Board gameBoard;
+    private Solver solver;
+    private final Board gameBoard;
+    private Board solvedBoard;
     private int level;
 
-    public Game(){
-
+    public Game(Board board, int level){
+        this.level = level;
+        this.gameBoard = board;
     }
 
+    public Game(){
+        this.setLevel();
+        this.gameBoard = generateBoard();
+    }
+
+    public Board getBoard(){return this.gameBoard;}
     public void setLevel(){
         this.level = PlayerOptions.chooseLevel();
     }
-
     public int getLevel(){
         return this.level;
     }
+    public void setSolver(){
 
-    public void getBoard(){
+        if(getBoard().getSolution() != null){
+            this.solver = new Solver(getBoard(), getBoard().getSolution());
+        }else{
+            this.solver = new Solver(getBoard());
+        }
+    }
+
+    public Board generateBoard(){
 
         int boardChosen = 0;
         Generator generator = new Generator(Board.generateSize(getLevel()));
 
         while(boardChosen != 1){
             generator = new Generator(Board.generateSize(getLevel()));
+
             System.out.println(generator.getBoard());
+            System.out.println();
+
             boardChosen = PlayerOptions.chooseGeneratedBoard();
         }
 
-        this.gameBoard = generator.getBoard();
+        return generator.getBoard();
 
     }
 
-    public void getSolvedBoard(){
-        Solver solver = new Solver(this.gameBoard);
-        PlayerOptions.printSolvedBoard(solver.solvingResult());
-
+    public void setSolvedBoard(){
+        setSolver();
+        this.solvedBoard = this.solver.solvingResult();
     }
 
-    public void gamePlay(){
+    public void play(){
 
         while(!gameBoard.isCompleted()){
+
             System.out.println(gameBoard);
+            System.out.println();
+
             String coords = PlayerOptions.chooseCell(gameBoard.getSize());
 
             if(coords.equals("0")){
@@ -47,7 +72,8 @@ public class Game {
                 surrender();
                 return;
 
-            }else{
+            }
+            else{
 
                 String[] coordsArr = coords.split(",");
                 int coordX = Integer.parseInt(coordsArr[0]);
@@ -63,42 +89,23 @@ public class Game {
         PlayerOptions.announceWin();
     }
 
-    public boolean playAgain(){
-
-        if(PlayerOptions.playAgain() == 1){
-            return true;
-        }
-
-        return false;
-
-    }
-
     public void surrender(){
         PlayerOptions.announceLose();
-        System.out.println();
+
         System.out.println("...Generowanie przykładowego rozwiązania...");
         System.out.println();
-        getSolvedBoard();
+        setSolvedBoard();
+
+        PlayerOptions.printSolvedBoard(this.solvedBoard);
+
         System.out.println();
     }
 
-    public void play(){
-        setLevel();
-        getBoard();
-        gamePlay();
-    }
-
-    public void run(){
-        Printer printer = new Printer();
-        printer.printStartText();
+    public int run(){
         play();
+        return PlayerOptions.playAgain();
 
-
-        while(playAgain()){
-            play();
-        }
     }
-
 
 
 }

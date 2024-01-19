@@ -1,4 +1,4 @@
-import javax.swing.*;
+package Utils;
 
 public class Printer {
     public void printStartText() {

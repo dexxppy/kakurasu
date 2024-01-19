@@ -1,3 +1,6 @@
+package Tests;
+
+import Utils.CombinationsGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

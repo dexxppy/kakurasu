@@ -1,12 +1,12 @@
-import org.w3c.dom.ranges.Range;
+package Backend;
 
-import java.awt.font.NumericShaper;
+import Utils.Combinations;
+
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class Generator{
 
-    private Board board;
+    private final Board board;
 
     public Generator(int boardSize) {
         this.board = new Board(boardSize);
@@ -52,16 +52,8 @@ public class Generator{
 
 
     }
-
-    public void regenerate(){
-        gen_rows();
-        gen_cols();
-    }
-
     public Board getBoard(){
         return this.board;
     }
 
-    public void markPoint(int i, int i1) {
-    }
 }

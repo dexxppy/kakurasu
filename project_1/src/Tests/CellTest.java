@@ -1,4 +1,8 @@
-import org.junit.jupiter.api.Test;
+package Tests;
+
+import Backend.Cell;
+import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,43 +12,43 @@ class CellTest {
     public void testCellInitialization() {
         Cell cell = new Cell();
         assertNotNull(cell);
-        assertFalse(cell.isFilled());
+        Assertions.assertFalse(cell.isFilled());
     }
 
     @Test
     void isFilled() {
         Cell cell = new Cell();
         cell.fill();
-        assertTrue(cell.isFilled());
+        Assertions.assertTrue(cell.isFilled());
         cell.toggleFill();
-        assertFalse(cell.isFilled());
+        Assertions.assertFalse(cell.isFilled());
         cell.toggleFill();
-        assertTrue(cell.isFilled());
+        Assertions.assertTrue(cell.isFilled());
     }
 
     @Test
     void testToString() {
         Cell emptyCell = new Cell();
-        assertEquals(" - ", emptyCell.toString());
+        Assertions.assertEquals(" - ", emptyCell.toString());
         Cell filledCell = new Cell();
         filledCell.fill();
-        assertEquals(" X ", filledCell.toString());
+        Assertions.assertEquals(" X ", filledCell.toString());
     }
 
     @Test
     void toggleFill() {
         Cell cell = new Cell();
-        assertFalse(cell.isFilled());
+        Assertions.assertFalse(cell.isFilled());
         cell.toggleFill();
-        assertTrue(cell.isFilled());
+        Assertions.assertTrue(cell.isFilled());
         cell.toggleFill();
-        assertFalse(cell.isFilled());
+        Assertions.assertFalse(cell.isFilled());
     }
 
     @Test
     void fill() {
         Cell cell = new Cell();
         cell.fill();
-        assertTrue(cell.isFilled());
+        Assertions.assertTrue(cell.isFilled());
     }
 }

@@ -1,3 +1,5 @@
+package Backend;
+
 public class Cell {
 
     /**
@@ -21,14 +23,8 @@ public class Cell {
     public int getCoordinateY() {
         return coordinateY;
     }
-    public void setCoordinateY(int coordinateY) {
-        this.coordinateY = coordinateY;
-    }
     public int getCoordinateX() {
         return coordinateX;
-    }
-    public void setCoordinateX(int coordinateX) {
-        this.coordinateX = coordinateX;
     }
     public boolean isFilled() {
         return isFilled;
