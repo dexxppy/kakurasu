@@ -86,9 +86,9 @@ public class Game {
 
         }
 
-        PlayerOptions.announceWin();
+        System.out.println(this.gameBoard);
         System.out.println();
-        PlayerOptions.printSolvedBoard(this.gameBoard);
+        PlayerOptions.announceWin();
     }
 
     public void surrender(){
