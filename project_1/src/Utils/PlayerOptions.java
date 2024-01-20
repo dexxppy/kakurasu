@@ -13,6 +13,10 @@ public class PlayerOptions {
     public static boolean cellInputCorrectness(String input, int boardSize){
         char[] inputArray = input.toCharArray();
 
+        if(inputArray.length == 0){
+            return false;
+        }
+
         if(inputArray.length != 3){
             return inputArray[0] - '0' == 0;
         }
@@ -58,7 +62,7 @@ public class PlayerOptions {
 
         String answer = scanLine();
 
-        while(!isNumeric(answer) || !Arrays.asList(correctInputs).contains(answer)){
+        while(answer.isEmpty() || !isNumeric(answer) || !Arrays.asList(correctInputs).contains(answer)){
             System.out.println("Wprowadź poprawny numer: ");
             answer = scanLine();
         }
