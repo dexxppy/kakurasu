@@ -10,16 +10,16 @@ public class Board {
      *
      * @param matrix board table consisting all cells
      * @param rowsSum constains sum for each row
-     * @param columsSum constains sum for each column
+     * @param columnsSum constains sum for each column
      * @param size board is sized as size x size
      * @param rowMaxSum specifies the maximum sum for a single row
      */
 
     Cell[] matrix;
-    int[] rowsSum;
-    int[] columnsSum;
+    public int[] rowsSum;
+    public int[] columnsSum;
     int size;
-    int rowMaxSum;
+    public int rowMaxSum;
     String[] solution;
 
     public Board(int[] rowsSum, int[] columnSum) {

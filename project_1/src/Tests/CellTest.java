@@ -1,8 +1,8 @@
 package Tests;
 
 import Backend.Cell;
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,6 +26,14 @@ class CellTest {
         Assertions.assertTrue(cell.isFilled());
     }
 
+    @Test
+    void testSetFilled() {
+        Cell cell = new Cell();
+        cell.setFilled(true);
+        cell.setFilled(false);
+        cell.setFilled(true);
+        assertTrue(cell.isFilled());
+    }
     @Test
     void testToString() {
         Cell emptyCell = new Cell();
