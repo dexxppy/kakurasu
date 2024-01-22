@@ -2,6 +2,8 @@ package Tests;
 
 import Utils.FileIO;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -9,6 +11,12 @@ import java.io.File;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FileIOTest {
+
+    @BeforeEach
+    public void init() {
+        FileIO.writeToFileTxt("testFile1.txt", "");
+    }
+
 
     @Test
     void appendToFileTxt() {
