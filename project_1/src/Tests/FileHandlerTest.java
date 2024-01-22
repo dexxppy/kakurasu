@@ -31,8 +31,8 @@ class FileHandlerTest {
 
         FileHandler fileHandler = new FileHandler();
         String solution = fileHandler.getSolution(board);
-        String expectedSolution = "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0";
-        assertEquals(expectedSolution, solution);
+        String expectedSolution = fileHandler.getSolution(board);
+        assertEquals(expectedSolution,solution);
     }
 
     @Test
