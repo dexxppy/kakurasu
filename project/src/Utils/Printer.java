@@ -25,7 +25,7 @@ public class Printer {
                         "                                                                                                                                                \n" +
                         "╔═══════════════════════════════════════════════════════════════╗\n" +
                         "║ Authors:                                                      ║\n" +
-                        "║ Artur Sliepchenko, Dominika Atroszczyk, Kacper Czajkowski     ║\n" +
+                        "║ dexppy, +2...                                                 ║\n" +
                         "╚═══════════════════════════════════════════════════════════════╝\n";
 
         System.out.println(startText);

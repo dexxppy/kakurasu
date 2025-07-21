@@ -63,7 +63,7 @@ public class PlayerOptions {
         String answer = scanLine();
 
         while(answer.isEmpty() || !isNumeric(answer) || !Arrays.asList(correctInputs).contains(answer)){
-            System.out.println("Wprowadź poprawny numer: ");
+            System.out.println("Enter valid number: ");
             answer = scanLine();
         }
 
@@ -76,7 +76,7 @@ public class PlayerOptions {
         String answer = scanLine();
 
         while(!cellInputCorrectness(answer, boardSize)){
-            System.out.println("Wprowadź poprawne współrzędne: ");
+            System.out.println("Enter valid coordinates: ");
             answer = scanLine();
         }
 
@@ -87,13 +87,13 @@ public class PlayerOptions {
     public static int chooseLevel(){
 
         System.out.println("""
-        Wybierz trudność:
-        1. Łatwy
-        2. Średniozaawansowany
-        3. Trudny
+        Select difficulty:
+        1. Easy
+        2. Medium
+        3. Hard
         """);
 
-        System.out.println("Poziom (podaj 1,2 lub 3):");
+        System.out.println("Difficulty (enter 1,2 lub 3):");
 
         return getNumberInput(new String[]{"1", "2", "3"});
     }
@@ -101,14 +101,14 @@ public class PlayerOptions {
     public static int chooseMainOption(){
 
         System.out.println("""
-        Wybierz opcje:
-        0. Wyjście
-        1. Wybierz planszę do zagrania
-        2. Zagraj z losową planszą
-        3. Wygeneruj nową planszę
+        Select option:
+        0. Exit
+        1. Select board to play
+        2. Play with random board
+        3. Generate new board
         """);
 
-        System.out.println("Opcja (podaj 0,1,2 lub 3):");
+        System.out.println("Option (enter 0,1,2 lub 3):");
 
         return getNumberInput(new String[]{"0", "1", "2", "3"});
     }
@@ -143,8 +143,8 @@ public class PlayerOptions {
 
             System.out.println(
                     """
-                    Wybierz planszę, na której chcesz zagrać z pliku $filePath.
-                    Opcja(podaj numer od 1 do $lastElem):"""
+                    Select board, on which you want to play from $filePath.
+                    Option(enter number from 1 to $lastElem):"""
                     .replace("$filePath", filePath + "matrix.txt")
                     .replace("$lastElem", Integer.toString(maxOption))
             );
@@ -159,12 +159,12 @@ public class PlayerOptions {
     public static int chooseGeneratedBoard(){
 
         System.out.println("""
-        Wybierz opcje:
-        1. Zagraj
-        2. Wylosuj inną planszę
+        Select option:
+        1. Play
+        2. Draw a new board
         """);
 
-        System.out.println("Opcja (podaj 1 lub 2): ");
+        System.out.println("Option (select 1 or 2): ");
 
         return getNumberInput(new String[]{"1", "2"});
 
@@ -173,13 +173,13 @@ public class PlayerOptions {
     public static int playAgain(){
 
         System.out.println("""
-        Zagraj ponownie?
-        0. Wyjście do menu
-        1. Wybierz planszę z pliku
-        2. Zagraj z wygenerowaną planszą
+        Play again?
+        0. Exit to menu
+        1. Select board from file
+        2. Play with a generated board
         """);
 
-        System.out.println("Opcja (podaj 0,1 lub 2): ");
+        System.out.println("Option (enter 0,1 or 2): ");
 
         int answer = getNumberInput(new String[]{"0", "1", "2"});
         if(answer == 0){answer = -1;}
@@ -190,8 +190,8 @@ public class PlayerOptions {
 
     public static String chooseCell(int boardSize){
 
-        System.out.println("( X-numer rzędu, Y-numer kolumny, 0-poddaj się )");
-        System.out.println("Numer komórki (w formacie X,Y) lub 0: ");
+        System.out.println("( X-row number, Y-column number, 0-surrender )");
+        System.out.println("Cell number (format X,Y) or 0: ");
 
         String answer = getCell(boardSize);
 
@@ -201,22 +201,22 @@ public class PlayerOptions {
     }
 
     public static void announceLose(){
-        System.out.println("Przegrałeś!");
+        System.out.println("You lost!");
         System.out.println();
     }
 
     public static void announceWin(){
-        System.out.println("Gratulacje! Plansza została wypełniona poprawnie.");
+        System.out.println("Congratulations! You correctly filled out the board.");
         System.out.println();
     }
 
     public static void printSolvedBoard(Board board){
         if(board.isCompleted()){
-            System.out.println("Przykładowo rozwiązana plansza: ");
+            System.out.println("Example of a solved board: ");
             System.out.println();
             System.out.println(board);
         }else{
-            System.out.println("Nie udało się wygenerować przykładowego rozwiązania");
+            System.out.println("Generation of a solved board example failed");
         }
 
     }
