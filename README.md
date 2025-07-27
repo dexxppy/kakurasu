@@ -43,9 +43,10 @@ You can also generate new boards that aren't present in game files and ask for s
 * Operating system with terminal support (Windows, Linux, macOS)
 
 ### Download files
-Go to the Realeses tab and download:
+Go to the Realeses tab and download kakurasu.zip file, that contains:
 * kakurasu.jar - the application
 * files/ - folder with game files (boards, solutions..)
+* README.md
 
 ### Running the Game
 1. Extract the files into the same folder (e.g., kakurasu/)
