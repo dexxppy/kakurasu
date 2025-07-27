@@ -10,17 +10,17 @@ public class Generator{
 
     public Generator(int boardSize) {
         this.board = new Board(boardSize);
-        gen_rows();
-        gen_cols();
+        generateRows();
+        generateColumns();
     }
 
     public Generator() {
         this.board = new Board();
-        gen_rows();
-        gen_cols();
+        generateRows();
+        generateColumns();
     }
 
-    public void gen_rows() {
+    public void generateRows() {
         Random rand = new Random();
         int[] rowsSum = new int[board.getSize()];
 
@@ -31,19 +31,19 @@ public class Generator{
         board.rowsSum = rowsSum;
     }
 
-    public void gen_cols() {
+    public void generateColumns() {
         Combinations comb = new Combinations();
         int[] columnSums = new int[board.getSize()];
 
         for (int i = 1; i <= board.getSize(); ++i) {
-            int row_number = board.rowsSum[i-1];
+            int rowNumber = board.rowsSum[i-1];
 
-            int[] rand_comb = comb.get_random_combination(row_number, board.getSize());
+            int[] randomCombination = comb.getRandomCombination(rowNumber, board.getSize());
 
-            for (int j = 0; j < rand_comb.length; ++j) {
+            for (int j = 0; j < randomCombination.length; ++j) {
 
-                int col_number = rand_comb[j] - 1 ;
-                columnSums[col_number] += i;
+                int columnNumber = randomCombination[j] - 1 ;
+                columnSums[columnNumber] += i;
 
             }
         }

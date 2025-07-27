@@ -31,7 +31,7 @@ public class Program {
                         game = new Game(board, level);
                         mode = game.run();
                     }else{
-                        System.out.println("Plik jest pusty! Dodaj nowe plansze z poziomu menu.");
+                        System.out.println("File is empty! Add a new board in menu selection.");
                         System.out.println();
                         mode = PlayerOptions.chooseMainOption();
                     }
@@ -49,7 +49,7 @@ public class Program {
                     Generator generator = new Generator(Board.generateSize(level));
 
                     fileHandler.addBoard(generator.getBoard(), level);
-                    System.out.println("Dodano nową planszę");
+                    System.out.println("New board was added.");
                     System.out.println();
 
                     mode = PlayerOptions.chooseMainOption();

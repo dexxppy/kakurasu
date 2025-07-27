@@ -6,22 +6,22 @@ import java.util.Random;
 
 public class Combinations {
 
-    public int[] get_random_combination(int number, int size) {
+    public int[] getRandomCombination(int number, int size) {
         if (number == 0)
             return new int[] {};
 
-        ArrayList<Object> res = get_all_combinations(number, size);
+        ArrayList<Object> res = getAllCombinations(number, size);
 
         if (res.size() == 1)
             return (int[]) res.get(0);
 
         Random rand = new Random();
-        int rand_index = rand.nextInt(res.size());
+        int randIndex = rand.nextInt(res.size());
 
-        return (int[]) res.get(rand_index);
+        return (int[]) res.get(randIndex);
     }
 
-    public ArrayList<Object> get_all_combinations(int number, int size) {
+    public ArrayList<Object> getAllCombinations(int number, int size) {
         ArrayList<Object> combinations = new ArrayList<>();
 
         for (int i = 1; i < Math.pow(2, size); ++i) {

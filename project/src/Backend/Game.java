@@ -94,7 +94,7 @@ public class Game {
     public void surrender(){
         PlayerOptions.announceLose();
 
-        System.out.println("...Generowanie przykładowego rozwiązania...");
+        System.out.println("...Generating an example solution...");
         System.out.println();
         setSolvedBoard();
 
