@@ -49,8 +49,8 @@ Go to the Realeses tab and download kakurasu.zip file, that contains:
 * README.md
 
 ### Running the Game
-1. Extract the files into the same folder (e.g., kakurasu/)
-2. **For Windows CMD use**: In order for boards to display properly, use UTF-8 encoding. Before running jar file, use this command:
+1. Extract the files into the same folder (e.g., kakurasu/) and open terminal in this folder.
+2. **For Windows use**: In order for boards to display properly, use UTF-8 encoding. Before running jar file, use this command:
 ``` bash
 chcp 65001
 ```
