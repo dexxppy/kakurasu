@@ -66,6 +66,6 @@ java -jar kakurasu.jar
 * (Math skills 😎)
 
 ## Author
-Project by: dexppy, +2 colleagues \
+Project by: dexxppy, +2 colleagues \
 Year: 2023 \
-Repository: github.com/dexppy/kakurasu
+Repository: github.com/dexxppy/kakurasu
